@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@700&family=Inter:wght@400;500;600;700&display=swap");
+
+*,
+::before,
+::after {
+  border-color: var(--chakra-colors-gray-200);
+  overflow-wrap: break-word;
+}
+
+html {
+  line-height: 1.5;
+  text-size-adjust: 100%;
+  font-family: system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
+  touch-action: manipulation;
+}
+
+body {
+  font-family: "Work Sans", sans-serif;
+}
