@@ -1,14 +1,14 @@
-import { Box, chakra, Container, Flex, Icon, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
+import { Box, chakra, Input, Container, Flex, Icon, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import Card from "@/components/Card";
 import User from "@/components/User";
 import UserDetails from "@/components/UserDetails";
+import { useState } from "react";
 
-const team = [
+var team = [
   {
-    name: "Brandon P.",
+    name: "Praveen yadav",
     role: "Chief Marketing Officer",
-    content:
-      "It really saves me time and effort. It is exactly what our business has been lacking. EEZY is the most valuable business resource we have EVER purchased. After using EEZY my business skyrocketed!",
+    content: "Full Stack maker & UI / UX Designer , love hip hop music Author of Building UI.",
     avatar:
       "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80",
   },
@@ -37,8 +37,32 @@ const team = [
       "https://images.unsplash.com/photo-1606513542745-97629752a13b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80",
   },
 ];
+const globalTeam = team;
 
 export default function App() {
+  const [value, setValue] = useState("");
+  const handleChange = (event) => {
+    setValue(event.target.value);
+
+    if (!event.target.value) {
+      console.log(globalTeam);
+      team = globalTeam;
+      return;
+    }
+
+    team = team.filter((item) => {
+      let string = "";
+      const indexKeys = ["name", "role"];
+      for (const [key, itemValue] of Object.entries(item)) {
+        if (indexKeys.includes(key)) string += " " + itemValue.toLowerCase();
+      }
+      console.log(string);
+      if (string.includes(value.toLocaleLowerCase())) {
+        return item;
+      }
+    });
+  };
+
   return (
     <Container maxW="container.lg">
       <Flex textAlign={"center"} pt={10} justifyContent={"center"} direction={"column"} width={"full"}>
@@ -59,15 +83,9 @@ export default function App() {
             color={useColorModeValue("gray.700", "gray.50")}>
             You're in good company
           </chakra.h1>
-          <chakra.h2
-            margin={"auto"}
-            width={"70%"}
-            fontFamily={"Inter"}
-            fontWeight={"medium"}
-            color={useColorModeValue("gray.500", "gray.400")}>
-            See why over <chakra.strong color={useColorModeValue("gray.700", "gray.50")}>150,000+</chakra.strong>{" "}
-            influencers use EEZY to manage their social media content!
-          </chakra.h2>
+          <Box>
+            <Input value={value} onChange={handleChange} placeholder="Search..." size="lg" />
+          </Box>
         </Box>
         <SimpleGrid columns={{ base: 1, xl: 2 }} spacing={"20"} mt={16} mx={"auto"}>
           {team.map((cardInfo, index) => (

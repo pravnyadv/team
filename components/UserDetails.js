@@ -56,7 +56,7 @@ const UserDetails = (props) => {
             fontWeight={"bold"}
             color={useColorModeValue("gray.800", "white")}
           >
-            Patterson johnson
+            {name}
           </chakra.h1>
 
           <chakra.p
@@ -65,14 +65,12 @@ const UserDetails = (props) => {
             fontFamily={"Inter"}
             color={useColorModeValue("gray.700", "gray.400")}
           >
-            Full Stack maker & UI / UX Designer , love hip hop music Author of
-            Building UI.
+            {content}
           </chakra.p>
 
           <Box
             mt={4}
             textAlign="left"
-            wordWrap="wrap"
             color={useColorModeValue("gray.700", "gray.200")}
           >
             <chakra.div fontSize="12">
@@ -89,7 +87,7 @@ const UserDetails = (props) => {
                 Linux
               </Badge>
               <Badge mr={1} variant="solid" colorScheme="facebook">
-                HubSpot
+                WordPress
               </Badge>
             </chakra.p>
           </Box>
@@ -97,7 +95,6 @@ const UserDetails = (props) => {
           <Box
             mt={4}
             textAlign="left"
-            wordWrap="wrap"
             color={useColorModeValue("gray.700", "gray.200")}
           >
             <chakra.div fontSize="12">
