@@ -9,7 +9,29 @@ import {
 } from "@chakra-ui/react";
 
 const UserDetails = (props) => {
-  const { name, role, content, avatar, index } = props;
+  const { name, role, status, profile_url, interests, skills } = props;
+
+  const showSkills = (skills) => {
+    skills = skills.split(",");
+    if (!skills.length) return;
+    return (
+      <div>
+        <chakra.div fontSize="12">
+          <strong>Skills</strong>
+        </chakra.div>
+
+        <chakra.p fontWeight={"medium"} fontFamily={"Inter"}>
+          {skills.map((skill, index) => {
+            return (
+              <Badge key={index} mr={1} variant="solid" colorScheme="facebook">
+                {skill}
+              </Badge>
+            );
+          })}
+        </chakra.p>
+      </div>
+    );
+  };
 
   return (
     <Flex
@@ -33,7 +55,7 @@ const UserDetails = (props) => {
           h={40}
           fit="cover"
           objectPosition="center"
-          src={avatar}
+          src={profile_url}
           alt="avatar"
         />
 
@@ -65,7 +87,7 @@ const UserDetails = (props) => {
             fontFamily={"Inter"}
             color={useColorModeValue("gray.700", "gray.400")}
           >
-            {content}
+            {status}
           </chakra.p>
 
           <Box
@@ -73,23 +95,7 @@ const UserDetails = (props) => {
             textAlign="left"
             color={useColorModeValue("gray.700", "gray.200")}
           >
-            <chakra.div fontSize="12">
-              <strong>Skills</strong>
-            </chakra.div>
-            <chakra.p fontWeight={"medium"} fontFamily={"Inter"}>
-              <Badge mr={1} variant="solid" colorScheme="facebook">
-                PHP
-              </Badge>
-              <Badge mr={1} variant="solid" colorScheme="facebook">
-                Laravel
-              </Badge>
-              <Badge mr={1} variant="solid" colorScheme="facebook">
-                Linux
-              </Badge>
-              <Badge mr={1} variant="solid" colorScheme="facebook">
-                WordPress
-              </Badge>
-            </chakra.p>
+            {showSkills(skills)}
           </Box>
 
           <Box
@@ -100,9 +106,11 @@ const UserDetails = (props) => {
             <chakra.div fontSize="12">
               <strong>Interests</strong>
             </chakra.div>
-            <chakra.p fontWeight={"medium"} fontFamily={"Inter"}>
-              Loves Chick Burger
-            </chakra.p>
+            {interests && (
+              <chakra.p fontWeight={"medium"} fontFamily={"Inter"}>
+                {interests}
+              </chakra.p>
+            )}
           </Box>
         </Box>
       </Box>

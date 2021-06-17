@@ -1,78 +1,72 @@
-import { Box, chakra, Input, Container, Flex, Icon, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  chakra,
+  Input,
+  Container,
+  Flex,
+  Icon,
+  SimpleGrid,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import Card from "@/components/Card";
 import User from "@/components/User";
 import UserDetails from "@/components/UserDetails";
-import { useState } from "react";
-
-var team = [
-  {
-    name: "Praveen yadav",
-    role: "Chief Marketing Officer",
-    content: "Full Stack maker & UI / UX Designer , love hip hop music Author of Building UI.",
-    avatar:
-      "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80",
-  },
-  {
-    name: "Krysta B.",
-    role: "Entrepreneur",
-    content:
-      "I didn't even need training. We've used EEZY for the last five years. I have gotten at least 50 times the value from EEZY. I made back the purchase price in just 48 hours!",
-    avatar:
-      "https://images.unsplash.com/photo-1598550874175-4d0ef436c909?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80",
-  },
-  {
-    name: "Darcy L.",
-    role: "Movie star",
-    content:
-      "Thank you for making it painless, pleasant and most of all, hassle free! I'm good to go. No matter where you go, EEZY is the coolest, most happening thing around! I love EEZY!",
-    avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=334&q=80",
-  },
-  {
-    name: "Daniel T.",
-    role: "Musician",
-    content:
-      "I am so pleased with this product. EEZY is both attractive and highly adaptable. Without EEZY, we would have gone bankrupt by now. Thank you for creating this product!",
-    avatar:
-      "https://images.unsplash.com/photo-1606513542745-97629752a13b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80",
-  },
-];
-const globalTeam = team;
+import { useEffect, useState } from "react";
 
 export default function App() {
+  var [team, setTeam] = useState([]);
+  var [teams, setTeams] = useState([]);
   const [value, setValue] = useState("");
-  const handleChange = (event) => {
-    setValue(event.target.value);
 
-    if (!event.target.value) {
-      console.log(globalTeam);
-      team = globalTeam;
+  useEffect(() => {
+    fetch("https://wa.niswey.net/api/team")
+      .then((res) => res.json())
+      .then((data) => {
+        setTeams(data.team);
+        setTeam(data.team);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!value) {
+      setTeam(teams);
       return;
     }
 
-    team = team.filter((item) => {
+    team = teams.filter((item) => {
       let string = "";
       const indexKeys = ["name", "role"];
       for (const [key, itemValue] of Object.entries(item)) {
-        if (indexKeys.includes(key)) string += " " + itemValue.toLowerCase();
+        if (indexKeys.includes(key)) string += " " + itemValue;
       }
-      console.log(string);
-      if (string.includes(value.toLocaleLowerCase())) {
+      if (string.toLocaleLowerCase().includes(value.toLowerCase())) {
         return item;
       }
     });
+    setTeam(team);
+  }, [value]);
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
   };
 
   return (
     <Container maxW="container.lg">
-      <Flex textAlign={"center"} pt={10} justifyContent={"center"} direction={"column"} width={"full"}>
+      <Flex
+        textAlign={"center"}
+        pt={10}
+        justifyContent={"center"}
+        direction={"column"}
+        width={"full"}
+      >
         <Box width={{ base: "full", sm: "lg", lg: "xl" }} margin={"auto"}>
           <chakra.h3
             fontFamily={"Work Sans"}
             fontWeight={"bold"}
             fontSize={20}
             textTransform={"uppercase"}
-            color={"purple.400"}>
+            color={"purple.400"}
+          >
             People love us
           </chakra.h3>
           <chakra.h1
@@ -80,19 +74,36 @@ export default function App() {
             fontSize={48}
             fontFamily={"Work Sans"}
             fontWeight={"bold"}
-            color={useColorModeValue("gray.700", "gray.50")}>
+            color={useColorModeValue("gray.700", "gray.50")}
+          >
             You're in good company
           </chakra.h1>
           <Box>
-            <Input value={value} onChange={handleChange} placeholder="Search..." size="lg" />
+            <Input
+              value={value}
+              onChange={handleChange}
+              placeholder="Search..."
+              size="lg"
+            />
           </Box>
         </Box>
-        <SimpleGrid columns={{ base: 1, xl: 2 }} spacing={"20"} mt={16} mx={"auto"}>
+        <SimpleGrid
+          columns={{ base: 1, xl: 2 }}
+          spacing={"20"}
+          mt={16}
+          mx={"auto"}
+        >
           {team.map((cardInfo, index) => (
-            <UserDetails {...cardInfo} index={index} key={index} />
+            <UserDetails {...cardInfo} key={index} />
           ))}
         </SimpleGrid>
-        <Box>
+        {!team.length && !teams.length && (
+          <chakra.p fontFamily={"Inter"}>List will appear shortly.</chakra.p>
+        )}
+        {!team.length && teams.length && (
+          <chakra.p fontFamily={"Inter"}>No match found</chakra.p>
+        )}
+        <Box mb={50}>
           <Icon viewBox="0 0 40 35" mt={14} boxSize={10} color={"purple.400"}>
             <path
               fill={"currentColor"}
