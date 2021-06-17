@@ -23,7 +23,7 @@ const UserDetails = (props) => {
         <chakra.p fontWeight={"medium"} fontFamily={"Inter"}>
           {skills.map((skill, index) => {
             return (
-              <Badge key={index} mr={1} variant="solid" colorScheme="facebook">
+              <Badge key={index} mr={1} variant="solid" colorScheme="green">
                 {skill}
               </Badge>
             );

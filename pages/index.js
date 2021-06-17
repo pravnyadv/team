@@ -1,15 +1,16 @@
 import {
   Box,
+  Button,
   chakra,
   Input,
   Container,
   Flex,
   Icon,
   SimpleGrid,
+  useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
-import Card from "@/components/Card";
-import User from "@/components/User";
+import { SunIcon, MoonIcon } from "@chakra-ui/icons";
 import UserDetails from "@/components/UserDetails";
 import { useEffect, useState } from "react";
 
@@ -50,6 +51,29 @@ export default function App() {
     setValue(event.target.value);
   };
 
+  const Toggle = () => {
+    const { colorMode, toggleColorMode } = useColorMode();
+
+    if (colorMode == "light") {
+      return (
+        <>
+          <MoonIcon
+            _hover={{ cursor: "pointer" }}
+            onClick={() => toggleColorMode()}
+          />
+        </>
+      );
+    }
+    return (
+      <>
+        <SunIcon
+          _hover={{ cursor: "pointer" }}
+          onClick={() => toggleColorMode()}
+        />
+      </>
+    );
+  };
+
   return (
     <Container maxW="container.lg">
       <Flex
@@ -59,6 +83,7 @@ export default function App() {
         direction={"column"}
         width={"full"}
       >
+        <chakra.div>{Toggle()}</chakra.div>
         <Box width={{ base: "full", sm: "lg", lg: "xl" }} margin={"auto"}>
           <chakra.h3
             fontFamily={"Work Sans"}
