@@ -8,7 +8,7 @@ const backgrounds = [
 ];
 
 export default function Card(props) {
-  const { name, role, content, avatar, index } = props;
+  const { name, role, profile_url, status, index } = props;
   return (
     <Flex
       boxShadow={"lg"}
@@ -34,21 +34,35 @@ export default function Card(props) {
         top: 0,
         left: 0,
         backgroundImage: backgrounds[index % 4],
-      }}>
-      <Flex direction={"column"} textAlign={"left"} justifyContent={"space-between"}>
-        <chakra.p fontFamily={"Inter"} fontWeight={"medium"} fontSize={"15px"} pb={4}>
-          {content}
+      }}
+    >
+      <Flex
+        direction={"column"}
+        textAlign={"left"}
+        justifyContent={"space-between"}
+      >
+        <chakra.p
+          fontFamily={"Inter"}
+          fontWeight={"medium"}
+          fontSize={"15px"}
+          pb={4}
+        >
+          {status}
         </chakra.p>
         <chakra.p fontFamily={"Work Sans"} fontWeight={"bold"} fontSize={14}>
           {name}
-          <chakra.span fontFamily={"Inter"} fontWeight={"medium"} color={"gray.500"}>
+          <chakra.span
+            fontFamily={"Inter"}
+            fontWeight={"medium"}
+            color={"gray.500"}
+          >
             {" "}
             - {role}
           </chakra.span>
         </chakra.p>
       </Flex>
       <Avatar
-        src={avatar}
+        src={profile_url}
         height={"80px"}
         width={"80px"}
         alignSelf={"center"}
