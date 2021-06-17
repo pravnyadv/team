@@ -1,6 +1,8 @@
 import "../styles/app.css";
-import { ChakraProvider } from "@chakra-ui/react";
-import { extendTheme } from "@chakra-ui/react";
+import { StoreProvider, useStore } from "../lib/zustandProvider";
+import { useHydrate } from "../lib/store";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+
 const colors = {
   brand: {
     900: "#1a365d",
@@ -11,10 +13,14 @@ const colors = {
 const theme = extendTheme({ colors });
 
 function MyApp({ Component, pageProps }) {
+  const store = useHydrate(pageProps.initialZustandState);
+
   return (
-    <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <StoreProvider store={store}>
+      <ChakraProvider theme={theme}>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </StoreProvider>
   );
 }
 export default MyApp;
