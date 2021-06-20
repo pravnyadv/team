@@ -146,7 +146,7 @@ export async function getStaticProps(context) {
 
 export const getStaticPaths = async () => {
   return {
-    paths: ["/member/[id]"],
+    paths: [],
     fallback: "blocking",
   };
 };
