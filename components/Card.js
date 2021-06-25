@@ -7,8 +7,7 @@ export default function Card(props) {
   return (
     <Link href={`member/${encodeURIComponent(id)}`}>
       <Box
-        mt={5}
-        mb={5}
+        style={{ marginBottom: "20px !important" }}
         cursor="pointer"
         px={"80px"}
         py={"40px"}
