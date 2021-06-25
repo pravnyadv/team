@@ -145,8 +145,11 @@ export async function getStaticProps(context) {
 }
 
 export const getStaticPaths = async () => {
+  const res = await fetch("https://wa.niswey.net/api/team");
+  const data = await res.json();
+  const paths = data.team.map((memmber) => ({ params: { id: member.id } }));
   return {
-    paths: [],
-    fallback: "blocking",
+    paths: paths,
+    fallback: false,
   };
 };

@@ -105,7 +105,7 @@ export default function App(props) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const res = await fetch("https://wa.niswey.net/api/team");
   const data = await res.json();
 
