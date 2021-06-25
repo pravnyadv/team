@@ -12,23 +12,33 @@ function App(props) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
+    let fullTimeCount = 0;
+    let internCount = 0;
+    let tabsList = [];
+    teams.map((entry) => {
+      if (entry.isIntern) {
+        internCount++;
+      } else {
+        fullTimeCount++;
+      }
+    });
     setTabs([
       {
         name: "all",
         label: "All",
-        count: 32,
+        count: fullTimeCount + internCount,
         active: true,
       },
       {
         name: "full",
         label: "Full-Time",
-        count: 26,
+        count: fullTimeCount,
         active: false,
       },
       {
         name: "all",
         label: "Intern",
-        count: 4,
+        count: internCount,
         active: false,
       },
     ]);
@@ -66,7 +76,24 @@ function App(props) {
       return tab;
     });
     setTabs(updatedTabs);
-    // [TODO] update teams to only show selected team type
+
+    if (index === 0) {
+      setTeam(teams);
+      return;
+    }
+
+    // only show selected member type
+    let filtered = [];
+    for (let i = 0; i < teams.length; i++) {
+      let entry = teams[i];
+      if (index === 1 && !entry.isIntern) {
+        filtered.push(entry);
+      }
+      if (index === 2 && entry.isIntern) {
+        filtered.push(entry);
+      }
+    }
+    setTeam(filtered);
   };
 
   return (
@@ -80,11 +107,11 @@ function App(props) {
           direction={"column"}
           width={"full"}
         >
-          <HStack justify="center" wrap="wrap" spacing="24px">
+          <Flex justify="center" wrap="wrap" spacing="24px">
             {team.map((cardInfo, index) => (
               <Card {...cardInfo} key={index} />
             ))}
-          </HStack>
+          </Flex>
           {!team.length && !teams.length && (
             <chakra.p fontFamily={"Inter"}>List will appear shortly.</chakra.p>
           )}
