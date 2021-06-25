@@ -4,7 +4,7 @@ import Card from "@/components/Card";
 import Header from "@/components/Header";
 import { useEffect, useState } from "react";
 
-export default function App(props) {
+function App(props) {
   var { data } = props;
   var [teams] = useState(data);
   var [tabs, setTabs] = useState([]);
@@ -124,3 +124,5 @@ export async function getServerSideProps(context) {
     },
   };
 }
+
+export default App;

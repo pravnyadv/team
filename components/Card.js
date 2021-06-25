@@ -7,12 +7,13 @@ export default function Card(props) {
   return (
     <Link href={`member/${encodeURIComponent(id)}`}>
       <Box
+        mt={5}
+        mb={5}
         cursor="pointer"
         px={"80px"}
         py={"40px"}
         rounded="lg"
         boxShadow={useColorModeValue("lg", "dark-lg")}
-        mb={5}
       >
         <Box textAlign="center">
           <Image
