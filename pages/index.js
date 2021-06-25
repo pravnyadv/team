@@ -109,6 +109,15 @@ export async function getServerSideProps(context) {
   const res = await fetch("https://wa.niswey.net/api/team");
   const data = await res.json();
 
+  if (!data) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {
       data: data.team,
