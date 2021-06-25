@@ -35,7 +35,7 @@ export default function Member(props) {
           direction={"column"}
           width={"full"}
         >
-          <Flex>
+          <Flex justifyContent={"center"} wrap={"wrap"}>
             <Box
               width="300px"
               minHeight="500px"
